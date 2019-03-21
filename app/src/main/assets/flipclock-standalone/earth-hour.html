@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="flipclock/css/flipclock.css">
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+        <script src="flipclock/js/flipclock.js"></script>	
+        
+        <style>
+            .flip-clock-label{
+                color: #ff670f !important;
+                font-family: Calibri;
+                font-size: 20px;
+                text-transform: uppercase;
+                text-align: center;
+            }
+            
+            .flip-clock-divider.days .flip-clock-label {
+                right: -100px;
+            }
+            
+            .flip-clock-divider.hours .flip-clock-label {
+                right: -106px;
+            }
+            
+            .flip-clock-divider.minutes .flip-clock-label {
+                right: -112px;
+            }
+            
+            .flip-clock-divider.seconds .flip-clock-label {
+                right: -115px;
+            }
+            
+        </style>
+    </head>
+    <body style="background: url('images/earth-hour.png'); background-repeat: no-repeat; background-size: cover;">
+        <div style="background: url('images/flipclock-bg.png'); background-repeat: repeat-x; height: 170px; width: 665px; position: fixed; top: 275px; left: 560px;  border-radius: 5px;" />
+        <div class="clock" style="margin:2em; position: fixed; top: 295px; left: 560px; "></div>
+
+        <script type="text/javascript">
+            var clock;
+
+            $(document).ready(function() {
+                    // Set dates.
+                    var futureDate  = new Date("March 30, 2019 08:30 PM GMT");
+                    var currentDate = new Date();
+
+                    // Calculate the difference in seconds between the future and current date
+                    var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+                    // Calculate day difference and apply class to .clock for extra digit styling.
+                    function dayDiff(first, second) {
+                            return (second-first)/(1000*60*60*24);
+                    }
+
+                    if (dayDiff(currentDate, futureDate) < 100) {
+                            $('.clock').addClass('twoDayDigits');
+                    } else {
+                            $('.clock').addClass('threeDayDigits');
+                    }
+
+                    if(diff < 0) {
+                            diff = 0;
+                    }
+
+                    // Instantiate a coutdown FlipClock
+                    clock = $('.clock').FlipClock(diff, {
+                            clockFace: 'DailyCounter',
+                            countdown: true
+                    });
+            });
+        </script>
+
+    </body>
+</html>
